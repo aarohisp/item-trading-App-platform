@@ -37,6 +37,13 @@ const SidebarContent = ({ sidebarCollapsed, setSidebarCollapsed }: SidebarConten
       {/* hamburger icon */}
       <SidebarLogo sidebarCollapsed={sidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
 
+      {/* Display your website name beside the toggle icon */}
+      {!sidebarCollapsed && (
+        <div className="gx-mb-4 gx-ml-2">
+          <h1 className="gx-text-white">Your Website Name</h1>
+        </div>
+      )}
+
       {/* custom scrollbar when window height is small */}
       <CustomScrollbars className="gx-layout-sider-scrollbar">
         <Menu style={{ paddingTop: "10px" }} defaultOpenKeys={[defaultOpenKeys!]} defaultSelectedKeys={[selectedKeys!]} theme={themeType === THEME_TYPE_LITE ? "light" : "dark"} mode="inline" items={items}></Menu>
