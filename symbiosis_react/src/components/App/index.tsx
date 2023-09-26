@@ -19,7 +19,6 @@ type RestrictedRouteProps = {
 
 const RestrictedRoute = ({ Component, location, ...rest }: RestrictedRouteProps) => {
   /* All routes will be checked through this component. (page refresh, navigation) */
-
   return (
     <Route
       {...rest}
@@ -122,17 +121,6 @@ const App = () => {
 
   // const currentAppLocale = AppLocale[locale.locale];
   const currentAppLocale = AppLocale["en"];
-
-  return (
-    <ConfigProvider locale={currentAppLocale.antd} direction={isDirectionRTL ? "rtl" : "ltr"}>
-      <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
-        <Switch>
-          <Route exact path="/" component={SignIn} />
-          <RestrictedRoute location={location} Component={MainApp} />
-        </Switch>
-      </IntlProvider>
-    </ConfigProvider>
-  );
 };
 
 export default memo(App);
