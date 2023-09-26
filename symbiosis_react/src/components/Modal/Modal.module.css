@@ -1,0 +1,36 @@
+.modal__cancelButton {
+    display: "none"
+}
+
+.modal__closeIcon {
+    border: "2px solid gray";
+    border-radius: 100%;
+    padding: 2px;
+    font-size: 14px;
+    font-weight: 700;
+
+}
+
+.modal-card {
+    margin-bottom: 0px;
+    padding: 20px;
+    width: 100%;
+    border: none;
+}
+
+.modal-card__message {
+    padding-block: 20px;
+    font-weight: 500;
+    font-size: 30px;
+    text-align: center;
+}
+
+.modal-card__button-container{
+    display: "flex";
+    justify-content: center; 
+    align-items: center;
+}
+
+.modal-card__button {
+    padding-inline: 2rem;
+}

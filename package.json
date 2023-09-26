@@ -1,0 +1,10 @@
+{
+  "name": "item-trading-Web-Portal",
+  "version": "1.0.0",
+  "description": "DOnation Portal",
+  "main": "index.js",
+  "repository": "https://github.com/aarohisp/item-trading-App-Platform.git",
+  "author": "aarohisp",
+  "license": "MIT",
+  "private": true
+}

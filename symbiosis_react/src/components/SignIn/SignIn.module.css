@@ -1,0 +1,25 @@
+.signIn-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 1rem;
+}
+
+.signIn-form__password{
+    margin-top: 4px;
+}
+
+.signIn-description{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.adani-logo{
+    width: 130px;
+}
+
+.signIn-btn{
+    width: 100%;
+    border-radius: 50px;
+}
