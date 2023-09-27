@@ -53,6 +53,19 @@ const Topbar: React.FC = () => {
             <UserProfile />
           </div>
         </div>
+        <div className="dt-header__bottom d-none d-lg-block">
+          <div className="dt-container">
+            <ul className="navbar-nav navbar-expand-md dt-navbar">
+              <li className="nav-item">
+                <a className="nav-link" href="javascript:void(0)">
+                  Main
+                </a>
+                <ul className="sub-menu">{/* Replace with your submenu items */}</ul>
+              </li>
+              {/* Add more nav items and submenus here */}
+            </ul>
+          </div>
+        </div>
       </div>
     </Header>
   );
