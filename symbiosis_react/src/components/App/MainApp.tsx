@@ -9,6 +9,7 @@ import { NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONT
 import { updateWindowWidth } from "../../appRedux/actions";
 import type { RootState } from "../../appRedux/store";
 import CommonModal from "../Modal";
+import Dashboard from "../Dashboard/Index";
 
 const { Content, Footer } = Layout;
 
@@ -91,12 +92,13 @@ const MainApp = () => {
         <Layout>
           {getNavStyles(navStyle)}
           <Content className={`gx-layout-content ${getContainerClass(navStyle)} `}>
+            <Dashboard />
             <App />
             <Footer>
               <div className="gx-layout-footer-content">
                 {/* get year from current year(YYYY) - next year (YY) */}
                 <div>
-                  © Company Enterprises Ltd (company). {new Date().getFullYear()}-{(new Date().getFullYear() + 1).toString().slice(2)}
+                  © SevaSahayog (company). {new Date().getFullYear()}-{(new Date().getFullYear() + 1).toString().slice(2)}
                 </div>
               </div>
             </Footer>
