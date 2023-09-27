@@ -16,6 +16,14 @@ const Topbar: React.FC = () => {
 
   return (
     <Header>
+      <div className="dt-header__top">
+        {" "}
+        {/* Add the topbar container */}
+        <div className="dt-container">
+          <form className="search-box d-none d-lg-block"> </form>
+        </div>
+      </div>
+
       <div className="gx-flex-row gx-align-items-center" style={{ width: "100%" }}>
         <div className="gx-linebar gx-mr-3">
           {navStyle === NAV_STYLE_DRAWER || ((navStyle === NAV_STYLE_FIXED || navStyle === NAV_STYLE_MINI_SIDEBAR) && width < TAB_SIZE) ? (
