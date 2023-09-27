@@ -10,6 +10,7 @@ import MainApp from "./MainApp";
 import DonForm from "../DonForm";
 import SignIn from "../SignIn";
 import Afterpost from "../Afterpost";
+import Regindex from "../Register/Regindex";
 import { onLayoutTypeChange, onNavStyleChange, setThemeType } from "../../appRedux/actions/Setting";
 import { LAYOUT_TYPE_BOXED, LAYOUT_TYPE_FRAMED, LAYOUT_TYPE_FULL, NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONTAL, NAV_STYLE_DEFAULT_HORIZONTAL, NAV_STYLE_INSIDE_HEADER_HORIZONTAL, THEME_TYPE_DARK } from "../../constants/ThemeSetting";
 import type { RootState } from "../../appRedux/store";
@@ -130,9 +131,8 @@ const App = () => {
       <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
         <Switch>
           <Route exact path="/" component={SignIn} />
-          <Route exact path="/Home" component={MainApp} />
-          <Route exact path="/DonForm" component={DonForm} />
-          <Route exact path="/Afterpost" component={Afterpost} />
+          <Route path="/registration" component={Regindex} /> {/* Define a route for registration */}
+          <RestrictedRoute location={location} Component={MainApp} />
         </Switch>
       </IntlProvider>
     </ConfigProvider>
