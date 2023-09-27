@@ -1,25 +1,39 @@
-.signIn-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 50vh;
-    gap: 1rem;
+.gx-app-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center contents horizontally */
+  justify-content: center; /* Center contents vertically */
+  height: 100vh; /* Set the container to full viewport height */
 }
 
-.signIn-form__password{
-    margin-top: 4px;
+.gx-app-login-main-content {
+  width: 300px; /* Set a maximum width for the content */
 }
 
-.signIn-description{
-    font-size: 20px;
-    font-weight: 600;
+.signIn-description {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center; /* Center the text */
+  margin-bottom: 20px;
 }
 
-.adani-logo{
-    width: 130px;
+.adani-logo {
+  width: 130px;
+  margin-bottom: 20px; /* Add some space between the logo and the form */
+  margin-left: 150px;
 }
 
-.signIn-btn{
-    width: 100%;
-    border-radius: 50px;
+.signIn-form {
+  width: 100%; /* Make the form fill the container width */
+  margin-left: 250px;
+  margin-right: 300px;
+}
+
+.signIn-form__password {
+  margin-top: 4px;
+}
+
+.signIn-btn {
+  width: 100%;
+  border-radius: 50px;
 }
