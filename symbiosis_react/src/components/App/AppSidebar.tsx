@@ -5,6 +5,7 @@ import Sidebar from "../Sidebar";
 import type { RootState } from "../../appRedux/store";
 
 const SIDEBAR_VISIBLE_ON = [NAV_STYLE_FIXED, NAV_STYLE_DRAWER, NAV_STYLE_MINI_SIDEBAR, NAV_STYLE_NO_HEADER_MINI_SIDEBAR, NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR];
+
 type AppSidebarProps = {
   navStyle: string;
 };

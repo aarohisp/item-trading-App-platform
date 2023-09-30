@@ -127,16 +127,15 @@ const App = () => {
   const currentAppLocale = AppLocale["en"];
 
   return (
-    <>
-      <ConfigProvider locale={currentAppLocale.antd} direction={isDirectionRTL ? "rtl" : "ltr"}>
-        <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
-          <Switch>
-            <Route exact path="/" component={SignIn} />
-            <RestrictedRoute location={location} Component={MainApp} />
-          </Switch>
-        </IntlProvider>
-      </ConfigProvider>
-    </>
+    <ConfigProvider locale={currentAppLocale.antd} direction={isDirectionRTL ? "rtl" : "ltr"}>
+      <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
+        <Switch>
+          <Route exact path="/" component={SignIn} />
+          <Route path="/registration" component={Regindex} /> {/* Define a route for registration */}
+          <RestrictedRoute location={location} Component={MainApp} />
+        </Switch>
+      </IntlProvider>
+    </ConfigProvider>
   );
 };
 
