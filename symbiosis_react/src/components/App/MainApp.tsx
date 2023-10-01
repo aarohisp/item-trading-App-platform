@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Layout } from "antd";
+import { Layout, Card, Avatar, Button, Col, Divider, Row } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment-timezone";
 import App from "../../routes/index";
@@ -12,6 +13,7 @@ import CommonModal from "../Modal";
 import Dashboard from "../Dashboard/Index";
 
 const { Content, Footer } = Layout;
+const { Meta } = Card;
 
 const getContainerClass = (navStyle: string) => {
   switch (navStyle) {
@@ -93,6 +95,129 @@ const MainApp = () => {
           {getNavStyles(navStyle)}
           <Content className={`gx-layout-content ${getContainerClass(navStyle)} `}>
             <Dashboard />
+            <Divider orientation="left">Popular Items</Divider>
+            <Row gutter={[16, 24]}>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+              <Col className="gutter-row" span={6}>
+                <div>
+                  <Card
+                    style={{ width: 300 }}
+                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                    actions={[
+                      <Button key="add-to-cart" type="primary" icon={<ShoppingCartOutlined />}>
+                        Add to Cart
+                      </Button>
+                    ]}
+                  >
+                    <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
+                  </Card>
+                </div>
+              </Col>
+            </Row>
             <App />
             <Footer>
               <div className="gx-layout-footer-content">
