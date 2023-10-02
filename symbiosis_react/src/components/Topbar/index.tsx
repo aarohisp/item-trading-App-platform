@@ -19,9 +19,11 @@ const Topbar = () => {
 
   return (
     <Header className="bg-dark py-2" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <Link to="/home"> 
       <h1 className="text-white mb-0" style={{ fontSize: "30px", marginRight: "20px", marginTop: "10px" }}>
         HelpHive
       </h1>
+      </Link>
       {/* Professional Search Bar */}
       <div style={{ display: "flex", alignItems: "center" }}>
         <Input
