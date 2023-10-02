@@ -1,87 +1,83 @@
 import React from "react";
-import { Layout, Input, Space, Typography } from "antd";
+import { Layout, Input, Space, Typography, Button } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import UserProfile from "./UserProfile";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { toggleCollapsedSideNav } from "../../appRedux/actions";
 import { NAV_STYLE_DRAWER, NAV_STYLE_FIXED, NAV_STYLE_MINI_SIDEBAR, TAB_SIZE } from "../../constants/ThemeSetting";
 import type { RootState } from "../../appRedux/store";
+import { SearchOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 const { Search } = Input;
 
-const Topbar: React.FC = () => {
+const Topbar = () => {
   const dispatch = useDispatch();
   const { navStyle } = useSelector(({ settings }: RootState) => settings);
   const { navCollapsed, width } = useSelector(({ common }: RootState) => common);
 
   return (
-    <Header>
-      <div className="dt-header__top">
-        {" "}
-        {/* Add the topbar container */}
-        <div className="dt-container">
-          <form className="search-box d-none d-lg-block"> </form>
-        </div>
+    <Header className="bg-dark py-2" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <h1 className="text-white mb-0" style={{ fontSize: "30px", marginRight: "20px", marginTop: "10px" }}>
+        HelpHive
+      </h1>
+      {/* Professional Search Bar */}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Input
+          placeholder="Search..."
+          size="large"
+          prefix={<SearchOutlined style={{ marginRight: "10px" }} />}
+          style={{
+            width: "400px",
+            borderRadius: "20px",
+            border: "1px solid #ccc",
+            paddingLeft: "15px"
+          }}
+        />
       </div>
 
-      <div className="gx-flex-row gx-align-items-center" style={{ width: "100%" }}>
+      {navStyle === NAV_STYLE_DRAWER || ((navStyle === NAV_STYLE_FIXED || navStyle === NAV_STYLE_MINI_SIDEBAR) && width < TAB_SIZE) ? (
         <div className="gx-linebar gx-mr-3">
-          {navStyle === NAV_STYLE_DRAWER || ((navStyle === NAV_STYLE_FIXED || navStyle === NAV_STYLE_MINI_SIDEBAR) && width < TAB_SIZE) ? (
-            <i
-              className="gx-icon-btn icon icon-menu"
-              onClick={() => {
-                dispatch(toggleCollapsedSideNav(!navCollapsed));
-              }}
-            />
-          ) : null}
-        </div>
-        <Typography.Title level={3} style={{ color: "#fff", margin: 0 }}>
-          Your Website Name
-        </Typography.Title>
-        <div style={{ flex: 1 }}>
-          <Space>
-            <Search
-              placeholder="Search..."
-              onSearch={(value) => {
-                // Handle search functionality here
-                console.log("Search value:", value);
-              }}
-              style={{ width: 200 }}
-              className="wieldy-search-bar"
-            />
-          </Space>
-        </div>
-        <div className="dt-nav-wrapper">
-          <ul className="dt-nav d-lg-none">{/* Replace with your dropdown menu code */}</ul>
-          <ul className="dt-nav">{/* Replace with your dropdown menu code */}</ul>
-          <ul className="dt-nav">{/* Replace with your dropdown menu code */}</ul>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>
-          {/* ShoppingCart Icon */}
-          <ShoppingCartOutlined
-            style={{ fontSize: "24px", color: "#000" }}
+          <i
+            className="gx-icon-btn icon icon-menu"
             onClick={() => {
-              // Handle click on shopping cart icon
-              console.log("Shopping cart clicked");
+              dispatch(toggleCollapsedSideNav(!navCollapsed));
             }}
           />
-          <div className="gx-d-none gx-d-lg-block" style={{ paddingTop: "14px" }}>
-            <UserProfile />
-          </div>
         </div>
-        <div className="dt-header__bottom d-none d-lg-block">
-          <div className="dt-container">
-            <ul className="navbar-nav navbar-expand-md dt-navbar">
-              <li className="nav-item">
-                <a className="nav-link" href="javascript:void(0)">
-                  Main
-                </a>
-                <ul className="sub-menu">{/* Replace with your submenu items */}</ul>
-              </li>
-              {/* Add more nav items and submenus here */}
-            </ul>
-          </div>
+      ) : null}
+      <Link to="/">
+        <div style={{ display: "flex" }}></div>
+      </Link>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem"
+        }}
+      >
+        {/* Add the link button here */}
+        {/* Use an anchor tag to open the URL */}
+        <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+          <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">
+            <Button type="primary">About Us</Button>
+          </a>
+          <Link to="/your-link-route">
+            <Button type="primary">Donate on HelpHive</Button>
+          </Link>
+          <Link to="/">
+            <Button type="primary">Sign In</Button>
+          </Link>
+          <Link to="/registration">
+            <Button type="primary">Register</Button>
+          </Link>
+        </div>
+
+        <div className="gx-d-none gx-d-lg-block" style={{ paddingTop: "14px" }}>
+          <UserProfile />
         </div>
       </div>
     </Header>
