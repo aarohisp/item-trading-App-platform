@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import weildy_logo from "../../assets/pictures/logo.png";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./SignIn.module.css";
+import Topbar from "../Topbar";
 
 const SignIn: React.FC = () => {
   const onFinish = (values: any) => {
@@ -11,6 +12,7 @@ const SignIn: React.FC = () => {
 
   return (
     <>
+    <Topbar/>
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content">
