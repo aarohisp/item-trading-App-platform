@@ -1,5 +1,6 @@
 import React from "react";
 import { Layout, Input, Space, Typography } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import UserProfile from "./UserProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCollapsedSideNav } from "../../appRedux/actions";
@@ -57,6 +58,14 @@ const Topbar: React.FC = () => {
           <ul className="dt-nav">{/* Replace with your dropdown menu code */}</ul>
         </div>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>
+          {/* ShoppingCart Icon */}
+          <ShoppingCartOutlined
+            style={{ fontSize: "24px", color: "#000" }}
+            onClick={() => {
+              // Handle click on shopping cart icon
+              console.log("Shopping cart clicked");
+            }}
+          />
           <div className="gx-d-none gx-d-lg-block" style={{ paddingTop: "14px" }}>
             <UserProfile />
           </div>
