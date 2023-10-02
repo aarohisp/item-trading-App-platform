@@ -24,7 +24,7 @@ const getItem = (label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
   } as MenuItem;
 };
 
-const items: MenuItem[] = [getItem("Home", "1", <i className="icon icon-home" />), getItem("Dashhboard", "2", <i className="icon icon-chart" />), getItem("Menu", "3", <i className="icon icon-feedback" />, [getItem("Sub Menu 1", "report-sub-1"), getItem("Sub Menu 2", "report-sub-2"), getItem("Sub Menu 3", "report-sub-3"), getItem("Sub Menu 4", "report-sub-4")])];
+const items: MenuItem[] = [getItem("Home", "1", <i className="icon icon-home" />), getItem("Dashhboard", "2", <i className="icon icon-chart" />), getItem("Category", "3", <i className="icon icon-feedback" />, [getItem("Clothes", "report-sub-1"), getItem("Furniture", "report-sub-2"), getItem("School Essentials", "report-sub-3"), getItem("Stationery", "report-sub-4"), getItem("Medicines", "report-sub-4")])];
 
 const SidebarContent = ({ sidebarCollapsed, setSidebarCollapsed }: SidebarContentProps) => {
   const { themeType } = useSelector(({ settings }: RootState) => settings);
