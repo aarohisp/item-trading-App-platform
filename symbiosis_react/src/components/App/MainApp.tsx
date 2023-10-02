@@ -10,7 +10,7 @@ import { NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONT
 import { updateWindowWidth } from "../../appRedux/actions";
 import type { RootState } from "../../appRedux/store";
 import CommonModal from "../Modal";
-import Dashboard from "../Dashboard/Index";
+// import Dashboard from "../Dashboard/Index";
 
 const { Content, Footer } = Layout;
 const { Meta } = Card;
@@ -94,7 +94,7 @@ const MainApp = () => {
         <Layout>
           {getNavStyles(navStyle)}
           <Content className={`gx-layout-content ${getContainerClass(navStyle)} `}>
-            <Dashboard />
+            {/* <Dashboard /> */}
             <Divider orientation="left">Popular Items</Divider>
             <Row gutter={[16, 24]}>
               <Col className="gutter-row" span={6}>
