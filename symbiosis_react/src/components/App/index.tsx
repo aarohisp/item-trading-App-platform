@@ -7,9 +7,9 @@ import URLSearchParams from "url-search-params";
 import type { Location } from "history";
 import AppLocale from "../../lngProvider";
 import MainApp from "./MainApp";
-import DonForm from "../DonForm";
+import DonForm from "../DonForm/index";
 import SignIn from "../SignIn";
-import Afterpost from "../Afterpost";
+import Afterpost from "../Afterpost/index";
 import Regindex from "../Register/Regindex";
 import { onLayoutTypeChange, onNavStyleChange, setThemeType } from "../../appRedux/actions/Setting";
 import { LAYOUT_TYPE_BOXED, LAYOUT_TYPE_FRAMED, LAYOUT_TYPE_FULL, NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONTAL, NAV_STYLE_DEFAULT_HORIZONTAL, NAV_STYLE_INSIDE_HEADER_HORIZONTAL, THEME_TYPE_DARK } from "../../constants/ThemeSetting";
@@ -131,7 +131,9 @@ const App = () => {
       <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
         <Switch>
           <Route exact path="/" component={SignIn} />
-          <Route path="/registration" component={Regindex} /> {/* Define a route for registration */}
+          <Route path="/registration" component={Regindex} /> {/* Defining a route for registration */}
+          <Route path="/donationForm" component={DonForm} /> {/* Defining a route for Donation form */}
+          <Route path="/afterPost" component={Afterpost} /> {/* Defining a route for After post form */}
           <RestrictedRoute location={location} Component={MainApp} />
         </Switch>
       </IntlProvider>
