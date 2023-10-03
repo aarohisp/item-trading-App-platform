@@ -73,9 +73,7 @@ const Topbar = () => {
           <Link to="/">
             <Button type="primary">Sign In</Button>
           </Link>
-          <Link to="/registration">
-            <Button type="primary">Register</Button>
-          </Link>
+          
         </div>
 
         <div className="gx-d-none gx-d-lg-block" style={{ paddingTop: "14px" }}>
