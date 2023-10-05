@@ -4,6 +4,7 @@ import weildy_logo from "../../assets/pictures/logo.png";
 import styles from "./Regindex.module.css";
 
 import { AutoComplete, Button, Cascader, Checkbox, Col, Form, Input, InputNumber, Row, Select } from "antd";
+import Topbar from "../Topbar";
 
 const { Option } = Select;
 
@@ -114,6 +115,7 @@ const Regindex: React.FC = () => {
 
   return (
     <>
+    <Topbar/>
       <div className="gx-app-login-wrap" style={{ marginTop: "40px" }}>
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content" style={{ textAlign: "end" }}>
