@@ -26,7 +26,7 @@ const SignIn: React.FC = () => {
 
   return (
     <>
-      <Topbar />
+     <Topbar />
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content">
