@@ -135,14 +135,14 @@ const App = () => {
       <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
         <Switch>
           <Route exact path="/" component={SignIn} />
-          <Route exact path="/wishlist" component={Wishlist} />
-          <Route exact path="/view-cart" component={Cart} />
+          {/* <Route exact path="/wishlist" component={Wishlist} />
+          <Route exact path="/view-cart" component={Cart} /> */}
           <Route exact path="/home" component={MainApp} />
-          <Route exact path="/gallery" component={Gallery} />
+          {/* <Route exact path="/gallery" component={Gallery} /> */}
           <Route path="/registration" component={Regindex} /> {/* Defining a route for registration */}
           <Route path="/donationForm" component={DonForm} /> {/* Defining a route for Donation form */}
           <Route path="/afterPost" component={Afterpost} /> {/* Defining a route for After post form */}
-          <Route path="/*" component={PageNotFound} />
+          {/* <Route path="/*" component={PageNotFound} /> */}
           <RestrictedRoute location={location} Component={MainApp} />
         </Switch>
       </IntlProvider>
