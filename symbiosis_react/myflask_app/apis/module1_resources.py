@@ -1,0 +1,1 @@
+#Each module has its own resources file. This will contain classes that define the RESTful resources using Flask-RESTful.
