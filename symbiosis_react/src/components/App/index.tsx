@@ -6,7 +6,7 @@ import { IntlProvider } from "react-intl";
 import URLSearchParams from "url-search-params";
 import type { Location } from "history";
 import AppLocale from "../../lngProvider";
-import Wishlist from "./Wishlist";
+// import Wishlist from "./Wishlist";
 import MainApp from "./MainApp";
 import DonForm from "../DonForm/index";
 import SignIn from "../SignIn";
@@ -15,9 +15,9 @@ import Regindex from "../Register/Regindex";
 import { onLayoutTypeChange, onNavStyleChange, setThemeType } from "../../appRedux/actions/Setting";
 import { LAYOUT_TYPE_BOXED, LAYOUT_TYPE_FRAMED, LAYOUT_TYPE_FULL, NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONTAL, NAV_STYLE_DEFAULT_HORIZONTAL, NAV_STYLE_INSIDE_HEADER_HORIZONTAL, THEME_TYPE_DARK } from "../../constants/ThemeSetting";
 import type { RootState } from "../../appRedux/store";
-import PageNotFound from "../PageNotFound/PageNotFound";
-import Gallery from "./Gallery";
-import Cart from "./Cart";
+// import PageNotFound from "../PageNotFound/PageNotFound";
+// import Gallery from "./Gallery";
+// import Cart from "./Cart";
 
 type RestrictedRouteProps = {
   Component: React.FC<any>;
