@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Api
 import logging
 from apis.routes import initialize_routes
+
 from middleware.request_middleware import before_request, after_request
 
 def create_app():
