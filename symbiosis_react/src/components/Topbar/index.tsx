@@ -10,6 +10,7 @@ import type { RootState } from "../../appRedux/store";
 import { SearchOutlined } from "@ant-design/icons";
 import MenuItem from "antd/lib/menu/MenuItem";
 import SubMenu from "antd/lib/menu/SubMenu";
+import { isAuthenticatedUser } from "../SignIn/Auth";
 
 const { Header } = Layout;
 const { Search } = Input;
@@ -18,13 +19,14 @@ const Topbar = () => {
   const dispatch = useDispatch();
   const { navStyle } = useSelector(({ settings }: RootState) => settings);
   const { navCollapsed, width } = useSelector(({ common }: RootState) => common);
+  const isAuthenticated = isAuthenticatedUser();
 
   return (
     <Header className="bg-dark py-2" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <Link to="/home"> 
-      <h1 className="text-white mb-0" style={{ fontSize: "30px", marginRight: "20px", marginTop: "10px" }}>
-        HelpHive
-      </h1>
+      <Link to="/home">
+        <h1 className="text-white mb-0" style={{ fontSize: "30px", marginRight: "20px", marginTop: "10px" }}>
+          HelpHive
+        </h1>
       </Link>
       {/* Professional Search Bar */}
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -82,21 +84,26 @@ const Topbar = () => {
       >
         {/* Add the link button here */}
         {/* Use an anchor tag to open the URL */}
-        <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-          <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">
-            <Button type="primary">About Us</Button>
-          </a>
-          <Link to="/donationForm">
-            <Button type="primary">Donate on HelpHive</Button>
-          </Link>
-          <Link to="/">
-            <Button type="primary">Sign In</Button>
-          </Link>
-          
-        </div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>
+          <div style={{ marginTop: "10px", display: "flex", gap: "10px"}}>
+            {isAuthenticated ? (
+              <>
+                <Link to="/donationForm">
+                  <Button type="primary">Donate on HelpHive</Button>
+                </Link>
+              </>
+            ) : (
+              <Link to="/">
+                <Button type="primary">Sign In</Button>
+              </Link>
+            )}
+          </div>
 
-        <div className="gx-d-none gx-d-lg-block" style={{ paddingTop: "14px" }}>
-          <UserProfile />
+          {isAuthenticated && (
+            <div className="gx-d-none gx-d-lg-block" style={{ paddingTop: "14px" }}>
+              <UserProfile />
+            </div>
+          )}
         </div>
       </div>
     </Header>

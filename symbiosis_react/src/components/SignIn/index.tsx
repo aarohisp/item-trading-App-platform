@@ -1,13 +1,19 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import weildy_logo from "../../assets/pictures/logo.png";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./SignIn.module.css";
 import Topbar from "../Topbar";
+import { setAuthenticated } from "./Auth";
 
 const SignIn: React.FC = () => {
+  const history = useHistory();
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
+    // Simulate successful login
+    setAuthenticated(true);
+    // Redirect to home or any other page after successful login
+    history.push("/home");
   };
 
   return (
