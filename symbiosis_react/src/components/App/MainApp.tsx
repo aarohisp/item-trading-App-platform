@@ -221,6 +221,10 @@ const MainApp = () => {
             <App />
             <Footer>
               <div className="gx-layout-footer-content">
+                {/* About Us link */}
+                <div style={{ textAlign:'center'}}>
+                  <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">About Us</a>
+                </div>
                 {/* get year from current year(YYYY) - next year (YY) */}
                 <div>
                   © SevaSahayog (company). {new Date().getFullYear()}-{(new Date().getFullYear() + 1).toString().slice(2)}
