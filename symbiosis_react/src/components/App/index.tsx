@@ -14,6 +14,7 @@ import Regindex from "../Register/Regindex";
 import { onLayoutTypeChange, onNavStyleChange, setThemeType } from "../../appRedux/actions/Setting";
 import { LAYOUT_TYPE_BOXED, LAYOUT_TYPE_FRAMED, LAYOUT_TYPE_FULL, NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONTAL, NAV_STYLE_DEFAULT_HORIZONTAL, NAV_STYLE_INSIDE_HEADER_HORIZONTAL, THEME_TYPE_DARK } from "../../constants/ThemeSetting";
 import type { RootState } from "../../appRedux/store";
+import Adminindex from "../AdminPage/Adminindex";
 
 type RestrictedRouteProps = {
   Component: React.FC<any>;
@@ -134,6 +135,7 @@ const App = () => {
           <Route path="/registration" component={Regindex} /> {/* Defining a route for registration */}
           <Route path="/donationForm" component={DonForm} /> {/* Defining a route for Donation form */}
           <Route path="/afterPost" component={Afterpost} /> {/* Defining a route for After post form */}
+          <Route path="/Adminpage" component={Adminindex}/>
           <RestrictedRoute location={location} Component={MainApp} />
         </Switch>
       </IntlProvider>
