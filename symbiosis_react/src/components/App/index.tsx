@@ -15,12 +15,15 @@ import Regindex from "../Register/Regindex";
 import { onLayoutTypeChange, onNavStyleChange, setThemeType } from "../../appRedux/actions/Setting";
 import { LAYOUT_TYPE_BOXED, LAYOUT_TYPE_FRAMED, LAYOUT_TYPE_FULL, NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONTAL, NAV_STYLE_DEFAULT_HORIZONTAL, NAV_STYLE_INSIDE_HEADER_HORIZONTAL, THEME_TYPE_DARK } from "../../constants/ThemeSetting";
 import type { RootState } from "../../appRedux/store";
+
+import Adminindex from "../AdminPage/Adminindex";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import Gallery from "./Gallery";
 import Cart from "./Cart";
 import UpdatePassword from '../UpdatePassword';
 import Myacc from "../Myacc";
 import ProdDesc from "../ProdDesc";
+
 
 type RestrictedRouteProps = {
   Component: React.FC<any>;
@@ -148,6 +151,7 @@ const App = () => {
           <Route path="/productdescription" component={ProdDesc} />
           <Route exact path="/updatepassword" component={UpdatePassword} />
           <Route exact path="/myaccount" component={Myacc} />
+          <Route path="/Adminpage" component={Adminindex}/>
           <Route path="/*" component={PageNotFound} />
           <RestrictedRoute location={location} Component={MainApp} />
         </Switch>
