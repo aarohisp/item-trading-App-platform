@@ -20,6 +20,9 @@ import Adminindex from "../AdminPage/Adminindex";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import Gallery from "./Gallery";
 import Cart from "./Cart";
+import UpdatePassword from '../UpdatePassword';
+import Myacc from "../Myacc";
+import ProdDesc from "../ProdDesc";
 
 
 type RestrictedRouteProps = {
@@ -145,11 +148,11 @@ const App = () => {
           <Route path="/registration" component={Regindex} /> {/* Defining a route for registration */}
           <Route path="/donationForm" component={DonForm} /> {/* Defining a route for Donation form */}
           <Route path="/afterPost" component={Afterpost} /> {/* Defining a route for After post form */}
-
+          <Route path="/productdescription" component={ProdDesc} />
+          <Route exact path="/updatepassword" component={UpdatePassword} />
+          <Route exact path="/myaccount" component={Myacc} />
           <Route path="/Adminpage" component={Adminindex}/>
-
           <Route path="/*" component={PageNotFound} />
-
           <RestrictedRoute location={location} Component={MainApp} />
         </Switch>
       </IntlProvider>

@@ -1,0 +1,47 @@
+/* Myacc.css */
+.myAccountLayout {
+  display: flex;       /* Use flexbox for the layout */
+}
+
+.sidebar {
+  flex: 1;             /* Sidebar takes up 1 portion of the space */
+  height: 100vh;
+}
+
+.my-account {
+    display: flex;
+    flex: 3;/* Content takes up 3 portions of the space */
+    /* flex-direction: column; */
+    justify-content: space-between;/* Provide space between the cards */
+    gap: 20px;
+    padding: 20px;
+    /* max-width: 600vx; */
+    width: 80vw;           
+    margin: 0 auto;
+  }
+  
+  .details-card, .info-card {
+    margin: 0 10px;   /* Provide some margins for a cleaner look */
+    min-height: 400px;
+    width: 100%;
+  }
+  .donations-card,
+  .requirements-card {
+    width: 100%;
+  }
+  
+.details-card {
+  display: flex;       /* Make the card a flex container */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+.avatar-container {
+  margin-bottom: 20px; /* Spacing between the avatar and the details */
+}
+
+.details-container {
+  text-align: left;   /* Align text to the left */
+  width: 100%;        /* Take full width of the container */
+  margin-top: 30px;
+}
