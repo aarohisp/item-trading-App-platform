@@ -5,6 +5,7 @@ import styles from "./Regindex.module.css";
 
 import { AutoComplete, Button, Cascader, Checkbox, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import Topbar from "../Topbar";
+import { isAuthenticatedUser } from "../SignIn/Auth";
 
 const { Option } = Select;
 
@@ -75,6 +76,7 @@ const tailFormItemLayout = {
 
 const Regindex: React.FC = () => {
   const [form] = Form.useForm();
+  const isAuthenticated = isAuthenticatedUser();
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
@@ -115,7 +117,7 @@ const Regindex: React.FC = () => {
 
   return (
     <>
-    <Topbar/>
+    {isAuthenticated && <Topbar />}
       <div className="gx-app-login-wrap" style={{ marginTop: "40px" }}>
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content" style={{ textAlign: "end" }}>

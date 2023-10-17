@@ -32,8 +32,8 @@ const UserProfile = () => {
 
   const userMenuOptions = (
     <ul className="gx-user-popover">
-      <li>My Account</li>
-      <li>Update Password</li>
+      <li><Link to="/myaccount">My Account</Link></li>
+      <li><Link to="/updatepassword">Update Password</Link></li>
       <li onClick={handleLogOut}>Logout</li>
     </ul>
   );
