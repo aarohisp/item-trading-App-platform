@@ -87,15 +87,8 @@ const Topbar = () => {
         {/* Add the link button here */}
         {/* Use an anchor tag to open the URL */}
         <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-          <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">
-            <Button type="primary">About Us</Button>
-          </a>
-          <Link to="/donationForm">
-            <Button type="primary">Donate on HelpHive</Button>
-          </Link>
-          <Link to="/">
-            <Button type="primary">Sign In</Button>
-          </Link>
+
+          
           
         </div>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>

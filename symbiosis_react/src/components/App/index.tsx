@@ -6,7 +6,7 @@ import { IntlProvider } from "react-intl";
 import URLSearchParams from "url-search-params";
 import type { Location } from "history";
 import AppLocale from "../../lngProvider";
-import Wishlist from "./Wishlist";
+// import Wishlist from "./Wishlist";
 import MainApp from "./MainApp";
 import DonForm from "../DonForm/index";
 import SignIn from "../SignIn";
@@ -17,9 +17,9 @@ import { LAYOUT_TYPE_BOXED, LAYOUT_TYPE_FRAMED, LAYOUT_TYPE_FULL, NAV_STYLE_ABOV
 import type { RootState } from "../../appRedux/store";
 
 import Adminindex from "../AdminPage/Adminindex";
-import PageNotFound from "../PageNotFound/PageNotFound";
-import Gallery from "./Gallery";
-import Cart from "./Cart";
+// import PageNotFound from "../PageNotFound/PageNotFound";
+// import Gallery from "./Gallery";
+// import Cart from "./Cart";
 import UpdatePassword from '../UpdatePassword';
 import Myacc from "../Myacc";
 import ProdDesc from "../ProdDesc";
@@ -141,10 +141,10 @@ const App = () => {
       <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
         <Switch>
           <Route exact path="/" component={SignIn} />
-          <Route exact path="/wishlist" component={Wishlist} />
-          <Route exact path="/view-cart" component={Cart} />
+          {/* <Route exact path="/wishlist" component={Wishlist} />
+          <Route exact path="/view-cart" component={Cart} /> */}
           <Route exact path="/home" component={MainApp} />
-          <Route exact path="/gallery" component={Gallery} />
+          {/* <Route exact path="/gallery" component={Gallery} /> */}
           <Route path="/registration" component={Regindex} /> {/* Defining a route for registration */}
           <Route path="/donationForm" component={DonForm} /> {/* Defining a route for Donation form */}
           <Route path="/afterPost" component={Afterpost} /> {/* Defining a route for After post form */}
@@ -152,7 +152,7 @@ const App = () => {
           <Route exact path="/updatepassword" component={UpdatePassword} />
           <Route exact path="/myaccount" component={Myacc} />
           <Route path="/Adminpage" component={Adminindex}/>
-          <Route path="/*" component={PageNotFound} />
+          {/* <Route path="/*" component={PageNotFound} /> */}
           <RestrictedRoute location={location} Component={MainApp} />
         </Switch>
       </IntlProvider>
