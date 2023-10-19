@@ -3,7 +3,6 @@ import { Button, Checkbox, Form, Input } from "antd";
 
 import { Link, useHistory } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 import axios from "axios"; // Make sure you've imported Axios
 
 import weildy_logo from "../../assets/pictures/logo.png";

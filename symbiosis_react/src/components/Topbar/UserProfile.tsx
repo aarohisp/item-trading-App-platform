@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Avatar, Popover, message } from "antd";
 import { useHistory } from "react-router";
 import styles from "./UserProfile.module.css";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   // CONSTANTS
