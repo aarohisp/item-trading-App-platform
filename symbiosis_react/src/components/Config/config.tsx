@@ -1,5 +1,5 @@
 const CONFIG = {
-    API_ENDPOINT: process.env.REACT_APP_API_ENDPOINT || 'https://25a2-202-71-156-66.ngrok.io'
+    API_ENDPOINT: process.env.REACT_APP_API_ENDPOINT || 'http://127.0.0.1:5000'
   };
 
 export default CONFIG;
