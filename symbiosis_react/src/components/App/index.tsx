@@ -141,8 +141,6 @@ const App = () => {
       <IntlProvider locale={currentAppLocale.locale} messages={currentAppLocale.messages}>
         <Switch>
           <Route exact path="/" component={SignIn} />
-          {/* <Route exact path="/wishlist" component={Wishlist} /> */}
-          {/* <Route exact path="/view-cart" component={Cart} /> */}
           <Route exact path="/home" component={MainApp} />
           {/* <Route exact path="/gallery" component={Gallery} /> */}
           <Route path="/registration" component={Regindex} /> {/* Defining a route for registration */}
