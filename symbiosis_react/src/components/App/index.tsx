@@ -148,7 +148,7 @@ const App = () => {
           <Route path="/registration" component={Regindex} /> {/* Defining a route for registration */}
           <Route path="/donationForm" component={DonForm} /> {/* Defining a route for Donation form */}
           <Route path="/afterPost" component={Afterpost} /> {/* Defining a route for After post form */}
-          <Route path="/productdescription" component={ProdDesc} />
+          <Route path="/productdescription/:itemId" component={ProdDesc} />
           <Route exact path="/updatepassword" component={UpdatePassword} />
           <Route exact path="/myaccount" component={Myacc} />
           <Route path="/Adminpage" component={Adminindex}/>

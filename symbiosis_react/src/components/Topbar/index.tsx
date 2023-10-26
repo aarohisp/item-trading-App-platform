@@ -25,18 +25,19 @@ const Topbar = () => {
   const [searchText, setSearchText] = useState(''); // State to hold the search input value
   const [options, setOptions] = useState([]); // State to hold the search results
   const history = useHistory();
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  // Function to handle search input change
+  // To handle search input change
   const handleSearch = (value: any) => {
     setSearchText(value);
 
-    // Make an API request to search for items based on the input value
+    // To search for items based on the input value
     axios
       .get(`${CONFIG.API_ENDPOINT}/api/search_items?query=${value}`)
       .then((response) => {
         const items = response.data.items.map((item: any) => ({
-          value: item.item_name, // Display name in the dropdown
-          data: item, // Actual data associated with the item
+          value: item.item_name, 
+          data: item, 
         }));
         setOptions(items);
       })
@@ -45,10 +46,11 @@ const Topbar = () => {
       });
   };
 
-  // Function to handle item selection from the dropdown
+  // To handle item selection from the dropdown
   const onSelect = (value: any, option: { data: any; }) => {
-    // You can access the selected item's data using option.data
+    // Access the selected item's data using option.data
     const selectedItem = option.data;
+    setSelectedItem(selectedItem);
     console.log('Selected Item:', selectedItem);
 
     history.push(`/productdescription/${selectedItem.item_id}`);
