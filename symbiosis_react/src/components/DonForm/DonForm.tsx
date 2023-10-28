@@ -25,11 +25,9 @@ const DonForm1: React.FC = () => {
 
   const onFinish = async (values: any) => {
     try {
-      // Create a FormData object to send the image
       const formData = new FormData();
       formData.append("image", values.upload[0].originFileObj);
 
-      // Send a POST request to upload the image
       const imageResponse = await fetch("http://localhost:5000/api/upload", {
         method: "POST",
         body: formData
@@ -39,6 +37,10 @@ const DonForm1: React.FC = () => {
         const imageData = await imageResponse.json();
         if (imageData.status === "success") {
           console.log("Image uploaded successfully:", imageData.message);
+          // Create an array to store the image_ids
+          const imageIds = [imageData.image_id];
+          console.log(imageIds);
+
           // Proceed to send the form data
           const productData = {
             item_name: values.item_name,
@@ -47,10 +49,12 @@ const DonForm1: React.FC = () => {
             donor_id: 5,
             category: values.category,
             item_address: values.item_address,
-            image_info: values.upload[0].name, // Use the image URL received from the server
+            image_info: imageIds, // Use the image_ids received from the server
             specification: values.specification
             // Add other form fields here
           };
+
+          console.log("Product Data:", productData);
 
           // Send a POST request to add the product
           const productResponse = await fetch("http://localhost:5000/api/add_product", {
@@ -107,7 +111,6 @@ const DonForm1: React.FC = () => {
               <div style={{ justifyContent: formLayout === "vertical" ? "none" : "center", paddingRight: formLayout === "horizontal" ? "110px" : "0" }}>
                 <Form.Item
                   label="What is the product's name?"
-                  help="Should be a combination of alphabets"
                   name="item_name"
                   rules={[
                     {
