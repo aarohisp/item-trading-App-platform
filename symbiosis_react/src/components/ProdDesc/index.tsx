@@ -8,6 +8,22 @@ import Topbar from "../Topbar";
 import { NAV_STYLE_ABOVE_HEADER, NAV_STYLE_BELOW_HEADER, NAV_STYLE_DARK_HORIZONTAL, NAV_STYLE_DEFAULT_HORIZONTAL, NAV_STYLE_DRAWER, NAV_STYLE_FIXED, NAV_STYLE_INSIDE_HEADER_HORIZONTAL, NAV_STYLE_MINI_SIDEBAR } from "../../constants/ThemeSetting";
 import { updateWindowWidth } from "../../appRedux/actions";
 import type { RootState } from "../../appRedux/store";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import CONFIG from "../Config/config";
+
+interface ItemData {
+  item_id: number;
+  item_name: string;
+  descriptions: string;
+  time_used: string; // Adjust the type if 'time_used' is a different type
+  donor_id: string; // Adjust the type if 'donor_id' is a different type
+  category: string; // Adjust the type if 'category' is a different type
+  item_address: string;
+  image_info: string;
+  specification: string;
+  org_id: string; // Adjust the type if 'org_id' is a different type
+}
 
 const { Content, Footer } = Layout;
 
@@ -76,6 +92,38 @@ const getNavStyles = (navStyle: string) => {
 };
 
 const ProdDesc = () => {
+  const [itemData, setItemData] = useState<ItemData | null>(null);
+  const [categoryImages, setCategoryImages] = useState<any[]>([]);  
+  const {itemId} = useParams<{itemId: string}>();
+  console.log('Item ID:', itemId);
+
+  useEffect(() => {
+    // Define the API endpoint for retrieving a single item
+    const apiEndpoint = `${CONFIG.API_ENDPOINT}/api/get_product/${itemId}`;
+  
+    axios.get(apiEndpoint)
+      .then((response) => {
+        const item = response.data.item;
+        setItemData(item);
+  
+        // Fetch images associated with the item's category(image_info in item)
+        const categoryApiEndpoint = `${CONFIG.API_ENDPOINT}/api/images/category/${item.image_info}`;
+  
+        axios.get(categoryApiEndpoint)
+          .then((categoryResponse) => {
+            const images = categoryResponse.data.images;
+            console.log('First Image:', images)
+            setCategoryImages(images);
+          })
+          .catch((categoryError) => {
+            console.error('Error fetching category images:', categoryError);
+          });
+      })
+      .catch((error) => {
+        console.error('Error fetching item data:', error);
+      });
+  }, [itemId]);
+  
   // CONSTANTS
   const dispatch = useDispatch();
 
@@ -111,24 +159,16 @@ const ProdDesc = () => {
   }, []);
 
   function ImageCarousel() {
-    const IMAGE_SIZE = 300;
+    const IMAGE_SIZE = 350;
+    const IMAGE_HEIGHT = 300;
     const AUTOPLAY_INTERVAL = 2000;
     const IMAGE_SPACING = 20;
-    const images = [
-      "https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg",
-      "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
-      "https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg",
-      "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
-      "https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
-
-      // ... add more images as needed
-    ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleArrowClick = () => {
       setCurrentIndex((prevIndex) => {
-        if (prevIndex + 2 >= images.length) return 0;
+        if (prevIndex + 2 >= categoryImages.length) return 0;
         return prevIndex + 1;
       });
     };
@@ -146,11 +186,24 @@ const ProdDesc = () => {
 
     return (
       <div style={styles.imageCarouselContainer}>
-        <h1>Product Description</h1>
+        <h1>{itemData  ? itemData .item_name : 'Title'}</h1>
         <Image.PreviewGroup>
           <div style={styles.imageDisplay}>
-            <Image width={IMAGE_SIZE} src={images[currentIndex]} style={{ marginRight: `${IMAGE_SPACING}px` }} />
-            {images[currentIndex + 1] && <Image width={IMAGE_SIZE} src={images[currentIndex + 1]} />}
+            {categoryImages[currentIndex] && (
+              <Image
+                width={IMAGE_SIZE} 
+                height={IMAGE_HEIGHT}
+                src={`data:image/jpeg;base64, ${categoryImages[currentIndex].image_data}`}
+                style={{ marginRight: `${IMAGE_SPACING}px` }}
+              />
+            )}
+            {categoryImages[currentIndex + 1] && (
+              <Image
+                width={IMAGE_SIZE}
+                height={IMAGE_HEIGHT}
+                src={`data:image/jpeg;base64, ${categoryImages[currentIndex + 1].image_data}`}
+              />
+            )}
             <button onClick={handleArrowClick} style={styles.imageNavigator}>
               ➔
             </button>
@@ -158,12 +211,13 @@ const ProdDesc = () => {
         </Image.PreviewGroup>
         <section style={styles.productDetails}>
           <h2>Product Details</h2>
-          <p>This section provides details about the displayed product. You can expand upon this section to give more context or describe the product in detail.</p>
+          <p>{itemData  ? itemData .descriptions : 'Description'}</p>
           <Button type="primary" shape="round" icon={<ContactsOutlined />} style={styles.contactBtn}>
             Contact Donor
           </Button>
         </section>
       </div>
+
     );
   }
   

@@ -1,5 +1,6 @@
 import React from "react";
-import { Layout, Input, Space, Typography, Button, Menu } from "antd";
+import { useEffect, useState } from "react";
+import { Layout, Input, AutoComplete, Space, Typography, Button, Menu } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import UserProfile from "./UserProfile";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +11,9 @@ import type { RootState } from "../../appRedux/store";
 import { SearchOutlined } from "@ant-design/icons";
 import MenuItem from "antd/lib/menu/MenuItem";
 import SubMenu from "antd/lib/menu/SubMenu";
+import axios from "axios";
+import CONFIG from "../Config/config";
+import { useHistory } from "react-router-dom";
 
 import { isAuthenticatedUser } from "../SignIn/Auth";
 
@@ -18,6 +22,40 @@ const { Header } = Layout;
 const { Search } = Input;
 
 const Topbar = () => {
+  const [searchText, setSearchText] = useState(''); // State to hold the search input value
+  const [options, setOptions] = useState([]); // State to hold the search results
+  const history = useHistory();
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // To handle search input change
+  const handleSearch = (value: any) => {
+    setSearchText(value);
+
+    // To search for items based on the input value
+    axios
+      .get(`${CONFIG.API_ENDPOINT}/api/search_items?query=${value}`)
+      .then((response) => {
+        const items = response.data.items.map((item: any) => ({
+          value: item.item_name, 
+          data: item, 
+        }));
+        setOptions(items);
+      })
+      .catch((error) => {
+        console.error('Error searching for items:', error);
+      });
+  };
+
+  // To handle item selection from the dropdown
+  const onSelect = (value: any, option: { data: any; }) => {
+    // Access the selected item's data using option.data
+    const selectedItem = option.data;
+    setSelectedItem(selectedItem);
+    console.log('Selected Item:', selectedItem);
+
+    history.push(`/productdescription/${selectedItem.item_id}`);
+  };
+
   const dispatch = useDispatch();
   const { navStyle } = useSelector(({ settings }: RootState) => settings);
   const { navCollapsed, width } = useSelector(({ common }: RootState) => common);
@@ -32,6 +70,13 @@ const Topbar = () => {
       </Link>
       {/* Professional Search Bar */}
       <div style={{ display: "flex", alignItems: "center" }}>
+      <AutoComplete
+        dropdownMatchSelectWidth={false}
+        style={{ width: 400 }}
+        options={options}
+        onSelect={onSelect}
+      >
+        
         <Input
           placeholder="Search..."
           size="large"
@@ -42,7 +87,10 @@ const Topbar = () => {
             border: "1px solid #ccc",
             paddingLeft: "15px"
           }}
+          value={searchText}
+          onChange={(e) => handleSearch(e.target.value)}
         />
+      </AutoComplete>
       </div>
       {/* Category Dropdown */}
       <Menu mode="horizontal" selectable={false} style={{ marginLeft: "20px" }}>
