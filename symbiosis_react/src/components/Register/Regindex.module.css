@@ -1,15 +1,11 @@
-/* Example: Style for the form container */
 .regindex-form-container {
   max-width: 3000px;
   margin: 200px auto 0;
-  position: relative;
-  /* Set position to relative */
-  top: 50%;
-  /* Position from top */
-  transform: translateY(-50%);
   padding: 20px;
+  height: 100%;
+  overflow: auto;
+  /* Remove any unnecessary positioning properties */
 }
-
 /* Add more CSS rules for styling form elements, labels, inputs, etc. */
 
 /* Example: Style for form labels */

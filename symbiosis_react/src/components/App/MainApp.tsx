@@ -12,6 +12,8 @@ import { updateWindowWidth } from "../../appRedux/actions";
 import type { RootState } from "../../appRedux/store";
 import CommonModal from "../Modal";
 // import Dashboard from "../Dashboard/Index";
+import axios from "axios";
+import CONFIG from "../Config/config";
 
 const { Content, Footer } = Layout;
 const { Meta } = Card;
@@ -65,6 +67,47 @@ const MainApp = () => {
     window.location.reload();
   };
 
+  type Product = {
+    item_id: number;
+    item_name: string;
+    descriptions: string;
+    image_info: string;
+    // Add other properties as needed
+  };
+
+  // const remoteApiUrl = 'http://127.0.0.1:5000';
+  const [products, setProducts] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchProducts = (page: number) => {
+    axios
+      .get(`${CONFIG.API_ENDPOINT}/api/get_products?page=${page}&per_page=10`)
+      .then((response) => {
+        setProducts(response.data.items as Product[]);
+        setTotalPages(response.data.total_pages);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchProducts(currentPage);
+  }, [currentPage]);
+
+  const handlePrevPage = () => {
+    // Increment the current page and fetch the next page of products
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      // Check if there are more pages to fetch
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   // EFFECTS
 
   useEffect(() => {
@@ -97,86 +140,32 @@ const MainApp = () => {
           <Content className={`gx-layout-content ${getContainerClass(navStyle)} `}>
             {/* <Dashboard /> */}
             <Divider orientation="left">Popular Items</Divider>
-            <Row gutter={[16, 24]}>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-              <Col className="gutter-row" span={6}>
-                <div>
-                  <Link to="/productdescription">
-                    <Card style={{ width: 300 }} cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}>
-                      <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title="Card title" description="This is the description" />
-                    </Card>
-                  </Link>
-                </div>
-              </Col>
-            </Row>
+            <div>
+              <Row gutter={[16, 24]}>
+                {products.map((product) => (
+                  <Col key={product.item_id} className="gutter-row" span={6}>
+                    <div>
+                      <Link to={`/productdescription/${product.item_id}`}>
+                        <Card style={{ width: 300 }} cover={<img alt="example" src={product.image_info} width={200} height={250} />}>
+                          <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title={product.item_name} description={product.descriptions} />
+                        </Card>
+                      </Link>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+              <button onClick={handlePrevPage}>Prev Page</button>
+              <button onClick={handleNextPage}>Next Page</button>
+            </div>
+
             <App />
             <Footer>
               <div className="gx-layout-footer-content">
                 {/* About Us link */}
-                <div style={{ textAlign:'center'}}>
-                  <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">About Us</a>
+                <div style={{ textAlign: "center" }}>
+                  <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">
+                    About Us
+                  </a>
                 </div>
                 {/* get year from current year(YYYY) - next year (YY) */}
                 <div>

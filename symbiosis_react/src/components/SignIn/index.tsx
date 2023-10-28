@@ -1,48 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
-
 import { Link, useHistory } from "react-router-dom";
-
-import axios from "axios"; // Make sure you've imported Axios
-
-import weildy_logo from "../../assets/pictures/logo.png";
+import axios from "axios";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./SignIn.module.css";
 import Topbar from "../Topbar";
 import { setAuthenticated } from "./Auth";
+import weildy_logo from "../../assets/pictures/logo.png";
 
 const SignIn: React.FC = () => {
   const history = useHistory();
-  const onFinish = (values: any) => {
+  const [errorMessage, setErrorMessage] = useState<string>(""); // State for error message
 
-    console.log("Received values of form: ", values);
-    // Simulate successful login
-    setAuthenticated(true);
-    // Redirect to home or any other page after successful login
-    history.push("/home");
+  const onFinish = (values: any) => {
+    // Reset the error message
+    setErrorMessage("");
 
     const { username, password } = values;
 
     axios
-      .post("/api/login", { username, password }) // Replace with the actual API endpoint
+      .post("http://localhost:5000/api/login", { username, password })
       .then((response) => {
         // Handle successful login
         console.log("Login successful");
         console.log(response.data); // The JWT token may be included in the response
+        setAuthenticated(true);
+        history.push("/home");
       })
       .catch((error) => {
-        // Handle login error
+        // Handle login error and set an error message
         console.error("Login error:", error);
+        setErrorMessage("Login failed. Please check your username and password.");
       });
   };
 
   return (
     <>
-     <Topbar />
+      <Topbar />
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content">
-            <div className="gx-app-logo-content">{/* <img alt="adani_airport" src={weildy_logo} /> */}</div>
+            <div className="gx-app-logo-content"></div>
             <div className={`gx-app-login-content ${styles["signIn-form"]}`}>
               <img alt="adani_logo" src={weildy_logo} className={`${styles["adani-logo"]}`} />
               <h6 className={styles["signIn-description"]}>Sign In</h6>
@@ -67,9 +65,15 @@ const SignIn: React.FC = () => {
                   <Button type="primary" htmlType="submit" className="login-form-button">
                     Log in
                   </Button>
-                  Or <Link to="/registration">register now!</Link> {/* Updated link to registration */}
+                  Or <Link to="/registration">register now!</Link>
                 </Form.Item>
               </Form>
+
+              {errorMessage && (
+                <div className="error-message" style={{ color: "red" }}>
+                  {errorMessage}
+                </div>
+              )}
             </div>
           </div>
         </div>
