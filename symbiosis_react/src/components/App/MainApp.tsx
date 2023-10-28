@@ -49,7 +49,7 @@ const getNavStyles = (navStyle: string) => {
   }
 };
 
-const MainApp = () => {  
+const MainApp = () => {
   // CONSTANTS
   const dispatch = useDispatch();
 
@@ -72,51 +72,38 @@ const MainApp = () => {
     item_name: string;
     descriptions: string;
     image_info: string;
-    item_category: number;
-    
+    // Add other properties as needed
   };
 
+  // const remoteApiUrl = 'http://127.0.0.1:5000';
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [imageData, setImageData] = useState('');
 
-  // Getting the first image through category
+  const fetchProducts = (page: number) => {
+    axios
+      .get(`${CONFIG.API_ENDPOINT}/api/get_products?page=${page}&per_page=10`)
+      .then((response) => {
+        setProducts(response.data.items as Product[]);
+        setTotalPages(response.data.total_pages);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch products
-        const productsResponse = await axios.get(
-          `${CONFIG.API_ENDPOINT}/api/get_products?page=${currentPage}&per_page=10`
-        );
-        setProducts(productsResponse.data.items as Product[]);
-        setTotalPages(productsResponse.data.total_pages);
-  
-        // Fetch the first image associated with the first product's category
-        //image_info in item mapped to image_category in image
-        if (productsResponse.data.items.length > 0) {
-          const firstProduct = productsResponse.data.items[0];
-          const imageResponse = await axios.get(
-            `${CONFIG.API_ENDPOINT}/api/images/category/${firstProduct.image_info}`
-          );
-          const firstImage = imageResponse.data.images[0];
-          console.log('First Image:', firstImage)
-          setImageData(firstImage.image_data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-  
-    fetchData();
+    fetchProducts(currentPage);
   }, [currentPage]);
-  
+
   const handlePrevPage = () => {
+    // Increment the current page and fetch the next page of products
     setCurrentPage(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) { // Check if there are more pages to fetch
+    if (currentPage < totalPages) {
+      // Check if there are more pages to fetch
       setCurrentPage(currentPage + 1);
     }
   };
@@ -155,11 +142,11 @@ const MainApp = () => {
             <Divider orientation="left">Popular Items</Divider>
             <div>
               <Row gutter={[16, 24]}>
-                {products.map(product => (
+                {products.map((product) => (
                   <Col key={product.item_id} className="gutter-row" span={6}>
                     <div>
                       <Link to={`/productdescription/${product.item_id}`}>
-                        <Card style={{ width: 300 }} cover={<img alt="example" src={`data:image/jpeg;base64, ${imageData}`} width={200} height={250} />}>
+                        <Card style={{ width: 300 }} cover={<img alt="example" src={product.image_info} width={200} height={250} />}>
                           <Card.Meta avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />} title={product.item_name} description={product.descriptions} />
                         </Card>
                       </Link>
@@ -175,8 +162,10 @@ const MainApp = () => {
             <Footer>
               <div className="gx-layout-footer-content">
                 {/* About Us link */}
-                <div style={{ textAlign:'center'}}>
-                  <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">About Us</a>
+                <div style={{ textAlign: "center" }}>
+                  <a href="https://sevasahayog.org/" target="_blank" rel="noopener noreferrer">
+                    About Us
+                  </a>
                 </div>
                 {/* get year from current year(YYYY) - next year (YY) */}
                 <div>

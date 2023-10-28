@@ -21,22 +21,72 @@ const validateProductName = (rule: any, value: string, callback: (error?: string
 
 const DonForm1: React.FC = () => {
   const [form] = Form.useForm();
-  const [formLayout, setFormLayout] = useState<LayoutType>("vertical");
-
-  const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
-    setFormLayout(layout);
-  };
-
   const history = useHistory();
 
-  const handleSubmit = () => {
-    // Use history.push to navigate to the desired page
-    history.push("/Afterpost"); // Replace '/another-page' with the desired URL
+  const onFinish = async (values: any) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", values.upload[0].originFileObj);
+
+      const imageResponse = await fetch("http://localhost:5000/api/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      if (imageResponse.status === 200) {
+        const imageData = await imageResponse.json();
+        if (imageData.status === "success") {
+          console.log("Image uploaded successfully:", imageData.message);
+          // Create an array to store the image_ids
+          const imageIds = [imageData.image_id];
+          console.log(imageIds);
+
+          // Proceed to send the form data
+          const productData = {
+            item_name: values.item_name,
+            descriptions: values.descriptions,
+            time_used: values.time_used,
+            donor_id: 5,
+            category: values.category,
+            item_address: values.item_address,
+            image_info: imageIds, // Use the image_ids received from the server
+            specification: values.specification
+            // Add other form fields here
+          };
+
+          console.log("Product Data:", productData);
+
+          // Send a POST request to add the product
+          const productResponse = await fetch("http://localhost:5000/api/add_product", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(productData)
+          });
+
+          if (productResponse.status === 200) {
+            const productResult = await productResponse.json();
+            if (productResult.status === "success") {
+              console.log("Product added successfully:", productResult.message);
+              form.resetFields();
+              history.push("/Afterpost");
+            } else {
+              console.error("Product add failed:", productResult.message);
+            }
+          } else {
+            console.error("Error:", productResponse.statusText);
+          }
+        } else {
+          console.error("Image upload failed:", imageData.message);
+        }
+      } else {
+        console.error("Error:", imageResponse.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
-
-  const formItemLayout = formLayout === "vertical" ? { labelCol: { span: 21 }, wrapperCol: { span: 21, offset: 9 } } : formLayout === "horizontal" ? { labelCol: { span: 14 }, wrapperCol: { span: 8 } } : null;
-
-  const buttonItemLayout = formLayout === "vertical" ? { wrapperCol: { span: 17, offset: 9 } } : formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null;
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -45,10 +95,9 @@ const DonForm1: React.FC = () => {
     return e?.fileList;
   };
 
-  const onFinish = (values: { name: string }) => {
-    console.log("Form values:", values);
-    history.push("/Afterpost");
-  };
+  const [formLayout, setFormLayout] = useState<LayoutType>("vertical");
+
+  const buttonItemLayout = formLayout === "vertical" ? { wrapperCol: { span: 17, offset: 9 } } : formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null;
 
   return (
     <>
@@ -60,20 +109,10 @@ const DonForm1: React.FC = () => {
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
             <Form autoComplete="off" name="myForm" onFinish={onFinish} labelCol={{ span: 15 }}>
               <div style={{ justifyContent: formLayout === "vertical" ? "none" : "center", paddingRight: formLayout === "horizontal" ? "110px" : "0" }}>
-                <Form.Item label="Form Layout" name="layout">
-                  <Radio.Group value={formLayout}>
-                    <Radio.Button value="vertical">Vertical</Radio.Button>
-                    <Radio.Button value="horizontal">Horizontal</Radio.Button>
-                  </Radio.Group>
-                </Form.Item>
-
                 <Form.Item
                   label="What is the product's name?"
-                  //validateStatus={val_check}
-                  help="Should be combination of alphabets"
-                  name="productname"
+                  name="item_name"
                   rules={[
-                    //{ validator: validateProductName },
                     {
                       type: "regexp",
                       pattern: /^[A-Za-z]+$/,
@@ -86,7 +125,7 @@ const DonForm1: React.FC = () => {
                   <Input placeholder="Product Name" />
                 </Form.Item>
                 <Form.Item
-                  name="e-mail"
+                  name="email"
                   label="Please enter your E-mail"
                   rules={[
                     {
@@ -102,7 +141,6 @@ const DonForm1: React.FC = () => {
                   name="name"
                   label="What's your preferred name?"
                   rules={[
-                    //{ validator: validateProductName },
                     {
                       type: "regexp",
                       pattern: /^[A-Za-z]+$/,
@@ -124,10 +162,9 @@ const DonForm1: React.FC = () => {
                   </Select>
                 </Form.Item>
                 <Form.Item
-                  name="location"
-                  label="Where does our precious donor live?"
+                  name="item_address"
+                  label="Where is the product located?"
                   rules={[
-                    //{ validator: validateProductName },
                     {
                       type: "regexp",
                       pattern: /^[A-Za-z]?-\d+(?:, [A-Za-z\d]+)*$/,
@@ -138,29 +175,27 @@ const DonForm1: React.FC = () => {
                 >
                   <TextArea rows={3} />
                 </Form.Item>
-                <Form.Item label="Please decribe the product">
+                <Form.Item name="descriptions" label="Please describe the product">
                   <TextArea rows={2} />
                 </Form.Item>
 
-                <Form.Item name="timeproduct" label="How long has the product been used?" rules={[{ required: true, message: "The time used is required" }]}>
-                  <InputNumber placeholder="Time(in years)" />
+                <Form.Item name="time_used" label="How long has the product been used?" rules={[{ required: true, message: "The time used is required" }]}>
+                  <InputNumber placeholder="Time (in years)" />
                 </Form.Item>
-                <Form.Item name="upload" label="Please upload the product image." valuePropName="fileList" getValueFromEvent={normFile} extra="Please upload max. photos" rules={[{ required: true, message: "The image is required" }]}>
-                  <Upload name="logo" action="/upload.do" listType="picture">
+                <Form.Item name="upload" label="Please upload the product image." valuePropName="fileList" getValueFromEvent={normFile} extra="Please upload max. 5 photos" rules={[{ required: true, message: "The image is required" }]}>
+                  <Upload name="logo" action="http://localhost:5000/api/upload" listType="picture">
                     <Button icon={<UploadOutlined />}>Click to upload</Button>
                   </Upload>
                 </Form.Item>
-                <Form.Item label="Any comments or info we should be aware of?" labelCol={{ span: 15 }}>
+                <Form.Item name="specification" label="Any comments or info we should be aware of?" labelCol={{ span: 15 }}>
                   <TextArea rows={2} />
                 </Form.Item>
               </div>
               <div style={{ alignContent: "center", justifyContent: "center" }}>
                 <Form.Item {...buttonItemLayout}>
-                  <Link to="/afterPost">
-                    <Button type="primary" className={`${styles["signIn-btn"]} button-gradiant`} onClick={handleSubmit}>
-                      Post
-                    </Button>
-                  </Link>
+                  <Button type="primary" className={`${styles["signIn-btn"]} button-gradiant`} htmlType="submit">
+                    Post
+                  </Button>
                 </Form.Item>
               </div>
             </Form>

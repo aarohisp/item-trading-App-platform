@@ -1,57 +1,46 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
-
 import { Link, useHistory } from "react-router-dom";
-
-import axios from "axios"; // Make sure you've imported Axios
-
-import weildy_logo from "../../assets/pictures/logo.png";
+import axios from "axios";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./SignIn.module.css";
 import Topbar from "../Topbar";
 import { setAuthenticated } from "./Auth";
-import CONFIG from '../Config/config';
+import weildy_logo from "../../assets/pictures/logo.png";
 
 const SignIn: React.FC = () => {
-  const [error, setError] = useState<string | null>(null);
   const history = useHistory();
+  const [errorMessage, setErrorMessage] = useState<string>(""); // State for error message
 
-  const fetchData = async (username: string, password: string) => {
-    try {
-        const response = await axios.post(`${CONFIG.API_ENDPOINT}/api/login`, { 
-            username, 
-            password 
-        });
+  const onFinish = (values: any) => {
+    // Reset the error message
+    setErrorMessage("");
 
-        console.log(response.data);
-
-        if (response.data) {  // Optionally check for certain response values to determine success.
-            setAuthenticated(true);  // Assuming a successful login will authenticate the user.
-            history.push("/home");  // Redirecting to home after a successful login.
-        } else {
-            // You can handle specific failed login logic here if needed.
-            setError('Login failed. Please check your credentials.');
-        }
-    } catch (err) {
-        console.error('Error fetching data:', err);
-        setError('Login failed. Please check your credentials.');
-    }
-};
-
-const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
     const { username, password } = values;
-    fetchData(username, password);
-};
 
+    axios
+      .post("http://localhost:5000/api/login", { username, password })
+      .then((response) => {
+        // Handle successful login
+        console.log("Login successful");
+        console.log(response.data); // The JWT token may be included in the response
+        setAuthenticated(true);
+        history.push("/home");
+      })
+      .catch((error) => {
+        // Handle login error and set an error message
+        console.error("Login error:", error);
+        setErrorMessage("Login failed. Please check your username and password.");
+      });
+  };
 
   return (
     <>
-     <Topbar />
+      <Topbar />
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content">
-            <div className="gx-app-logo-content">{/* <img alt="adani_airport" src={weildy_logo} /> */}</div>
+            <div className="gx-app-logo-content"></div>
             <div className={`gx-app-login-content ${styles["signIn-form"]}`}>
               <img alt="adani_logo" src={weildy_logo} className={`${styles["adani-logo"]}`} />
               <h6 className={styles["signIn-description"]}>Sign In</h6>
@@ -76,10 +65,15 @@ const onFinish = (values: any) => {
                   <Button type="primary" htmlType="submit" className="login-form-button">
                     Log in
                   </Button>
-                  Or <Link to="/registration">register now!</Link> {/* Updated link to registration */}
+                  Or <Link to="/registration">register now!</Link>
                 </Form.Item>
               </Form>
-              {error && <p style={{ color: 'red' }}>{error}</p>}
+
+              {errorMessage && (
+                <div className="error-message" style={{ color: "red" }}>
+                  {errorMessage}
+                </div>
+              )}
             </div>
           </div>
         </div>
