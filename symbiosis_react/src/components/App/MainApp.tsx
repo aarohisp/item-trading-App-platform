@@ -168,13 +168,13 @@ const MainApp = () => {
         <Layout>
           {getNavStyles(navStyle)}
           <Content className={`gx-layout-content ${getContainerClass(navStyle)}`}>
-            <Divider orientation="left">Popular Items</Divider>
+            <Divider orientation="center">Popular Items</Divider>
             <div>
               <Row gutter={[16, 24]}>
                 {products.map((product) => (
                   <Col key={product.item_id} className="gutter-row" span={6}>
                     <div>
-                      <Link to={`http://127.0.0.1:5000/api/get_product/${product.item_id}`}>
+                      <Link to={`api/get_product/${product.item_id}`}>
                         <Card
                           style={{ width: 300 }}
                           cover={
