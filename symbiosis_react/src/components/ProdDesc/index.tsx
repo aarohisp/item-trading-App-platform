@@ -25,6 +25,10 @@ interface ItemData {
   org_id: string; // Adjust the type if 'org_id' is a different type
 }
 
+type ProdDescProps = {
+  itemId: number | null;
+};
+
 const { Content, Footer } = Layout;
 
 const getContainerClass = (navStyle: string) => {
@@ -91,39 +95,42 @@ const getNavStyles = (navStyle: string) => {
   }
 };
 
-const ProdDesc = () => {
+const ProdDesc = (props: ProdDescProps) => {
   const [itemData, setItemData] = useState<ItemData | null>(null);
-  const [categoryImages, setCategoryImages] = useState<any[]>([]);  
-  const {itemId} = useParams<{itemId: string}>();
-  console.log('Item ID:', itemId);
+  const [categoryImages, setCategoryImages] = useState<any[]>([]);
+  const { itemId } = useParams<{ itemId: string }>();
+
+  console.log("Item ID:", itemId);
 
   useEffect(() => {
     // Define the API endpoint for retrieving a single item
     const apiEndpoint = `${CONFIG.API_ENDPOINT}/api/get_product/${itemId}`;
-  
-    axios.get(apiEndpoint)
+
+    axios
+      .get(apiEndpoint)
       .then((response) => {
         const item = response.data.item;
         setItemData(item);
-  
+
         // Fetch images associated with the item's category(image_info in item)
         const categoryApiEndpoint = `${CONFIG.API_ENDPOINT}/api/images/category/${item.image_info}`;
-  
-        axios.get(categoryApiEndpoint)
+
+        axios
+          .get(categoryApiEndpoint)
           .then((categoryResponse) => {
             const images = categoryResponse.data.images;
-            console.log('First Image:', images)
+            console.log("First Image:", images);
             setCategoryImages(images);
           })
           .catch((categoryError) => {
-            console.error('Error fetching category images:', categoryError);
+            console.error("Error fetching category images:", categoryError);
           });
       })
       .catch((error) => {
-        console.error('Error fetching item data:', error);
+        console.error("Error fetching item data:", error);
       });
   }, [itemId]);
-  
+
   // CONSTANTS
   const dispatch = useDispatch();
 
@@ -179,31 +186,18 @@ const ProdDesc = () => {
       });
       const autoplay = setInterval(() => {
         handleArrowClick();
-    }, AUTOPLAY_INTERVAL);
-  
-    return () => clearInterval(autoplay); // Cleanup the interval when the component is unmounted
+      }, AUTOPLAY_INTERVAL);
+
+      return () => clearInterval(autoplay); // Cleanup the interval when the component is unmounted
     }, [dispatch]);
 
     return (
       <div style={styles.imageCarouselContainer}>
-        <h1>{itemData  ? itemData .item_name : 'Title'}</h1>
+        <h1>{itemData ? itemData.item_name : "Title"}</h1>
         <Image.PreviewGroup>
           <div style={styles.imageDisplay}>
-            {categoryImages[currentIndex] && (
-              <Image
-                width={IMAGE_SIZE} 
-                height={IMAGE_HEIGHT}
-                src={`data:image/jpeg;base64, ${categoryImages[currentIndex].image_data}`}
-                style={{ marginRight: `${IMAGE_SPACING}px` }}
-              />
-            )}
-            {categoryImages[currentIndex + 1] && (
-              <Image
-                width={IMAGE_SIZE}
-                height={IMAGE_HEIGHT}
-                src={`data:image/jpeg;base64, ${categoryImages[currentIndex + 1].image_data}`}
-              />
-            )}
+            {categoryImages[currentIndex] && <Image width={IMAGE_SIZE} height={IMAGE_HEIGHT} src={`data:image/jpeg;base64, ${categoryImages[currentIndex].image_data}`} style={{ marginRight: `${IMAGE_SPACING}px` }} />}
+            {categoryImages[currentIndex + 1] && <Image width={IMAGE_SIZE} height={IMAGE_HEIGHT} src={`data:image/jpeg;base64, ${categoryImages[currentIndex + 1].image_data}`} />}
             <button onClick={handleArrowClick} style={styles.imageNavigator}>
               ➔
             </button>
@@ -211,16 +205,15 @@ const ProdDesc = () => {
         </Image.PreviewGroup>
         <section style={styles.productDetails}>
           <h2>Product Details</h2>
-          <p>{itemData  ? itemData .descriptions : 'Description'}</p>
+          <p>{itemData ? itemData.descriptions : "Description"}</p>
           <Button type="primary" shape="round" icon={<ContactsOutlined />} style={styles.contactBtn}>
             Contact Donor
           </Button>
         </section>
       </div>
-
     );
   }
-  
+
   return (
     <>
       <Layout className="gx-app-layout">
