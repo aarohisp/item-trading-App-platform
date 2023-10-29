@@ -168,7 +168,7 @@ const MainApp = () => {
         <Layout>
           {getNavStyles(navStyle)}
           <Content className={`gx-layout-content ${getContainerClass(navStyle)}`}>
-            <Divider orientation="left">Popular Items</Divider>
+            <Divider orientation="center">Popular Items</Divider>
             <div>
               <Row gutter={[16, 24]}>
                 {products.map((product) => (

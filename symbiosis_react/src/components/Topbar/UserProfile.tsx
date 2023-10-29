@@ -1,9 +1,8 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Avatar, Popover, message } from "antd";
 import { useHistory } from "react-router";
 import styles from "./UserProfile.module.css";
-import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   // CONSTANTS
@@ -34,8 +33,12 @@ const UserProfile = () => {
 
   const userMenuOptions = (
     <ul className="gx-user-popover">
-      <li><Link to="/myaccount">My Account</Link></li>
-      <li><Link to="/updatepassword">Update Password</Link></li>
+      <li>
+        <Link to="/myaccount">My Account</Link>
+      </li>
+      <li>
+        <Link to="/updatepassword">Update Password</Link>
+      </li>
       <li onClick={handleLogOut}>Logout</li>
     </ul>
   );
