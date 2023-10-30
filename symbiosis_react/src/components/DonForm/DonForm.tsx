@@ -124,7 +124,7 @@ const DonForm1: React.FC = () => {
                 >
                   <Input placeholder="Product Name" />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                   name="email"
                   label="Please enter your E-mail"
                   rules={[
@@ -136,8 +136,8 @@ const DonForm1: React.FC = () => {
                   ]}
                 >
                   <Input placeholder="Owner Email" />
-                </Form.Item>
-                <Form.Item
+                </Form.Item> */}
+                {/* <Form.Item
                   name="name"
                   label="What's your preferred name?"
                   rules={[
@@ -150,7 +150,7 @@ const DonForm1: React.FC = () => {
                   ]}
                 >
                   <Input placeholder="Owner's Full Name" />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item name="category" label="What is the product's category?" rules={[{ required: true, message: "Product's category is required" }]}>
                   <Select>
                     <Select.Option value="clothes">Clothes</Select.Option>
@@ -170,7 +170,7 @@ const DonForm1: React.FC = () => {
                       pattern: /^[A-Za-z]?-\d+(?:, [A-Za-z\d]+)*$/,
                       message: "Invalid address format. Example: A-506, Marylane 202"
                     },
-                    { required: true, message: "Your address is required" }
+                    { required: true, message: "The item address is required" }
                   ]}
                 >
                   <TextArea rows={3} />
