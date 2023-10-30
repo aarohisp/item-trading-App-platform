@@ -11,18 +11,18 @@ import type { RootState } from "../../appRedux/store";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import CONFIG from "../Config/config";
+import "./index.css"; // Import the CSS file
 
 interface ItemData {
+  category: string;
+  descriptions: string;
+  donor_id: number;
+  image_info: number[]; // Assuming image_info is an array of image IDs
+  item_address: string;
   item_id: number;
   item_name: string;
-  descriptions: string;
-  time_used: string; // Adjust the type if 'time_used' is a different type
-  donor_id: string; // Adjust the type if 'donor_id' is a different type
-  category: string; // Adjust the type if 'category' is a different type
-  item_address: string;
-  image_info: string;
   specification: string;
-  org_id: string; // Adjust the type if 'org_id' is a different type
+  time_used: number;
 }
 
 type ProdDescProps = {
@@ -56,22 +56,6 @@ const styles: any = {
     justifyContent: "flex-start",
     position: "relative"
   },
-  imageDisplay: {
-    display: "flex",
-    alignItems: "center",
-    position: "relative"
-  },
-  imageNavigator: {
-    position: "absolute",
-    right: "-30px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    fontSize: "24px",
-    cursor: "pointer",
-    background: "transparent",
-    border: "none",
-    outline: "none"
-  },
   productDetails: {
     marginTop: "20px"
   },
@@ -97,34 +81,22 @@ const getNavStyles = (navStyle: string) => {
 
 const ProdDesc = (props: ProdDescProps) => {
   const [itemData, setItemData] = useState<ItemData | null>(null);
-  const [categoryImages, setCategoryImages] = useState<any[]>([]);
   const { itemId } = useParams<{ itemId: string }>();
+  const [selectedProductImage, setSelectedProductImage] = useState<string | null>(null);
 
   console.log("Item ID:", itemId);
 
   useEffect(() => {
     // Define the API endpoint for retrieving a single item
-    const apiEndpoint = `${CONFIG.API_ENDPOINT}/api/get_product/${itemId}`;
+    const apiEndpoint = `http://127.0.0.1:5000/api/get_product/${itemId}`;
+
+    console.log("Fetching item with ID:", itemId); // Log the item ID
 
     axios
       .get(apiEndpoint)
       .then((response) => {
         const item = response.data.item;
         setItemData(item);
-
-        // Fetch images associated with the item's category(image_info in item)
-        const categoryApiEndpoint = `${CONFIG.API_ENDPOINT}/api/images/category/${item.image_info}`;
-
-        axios
-          .get(categoryApiEndpoint)
-          .then((categoryResponse) => {
-            const images = categoryResponse.data.images;
-            console.log("First Image:", images);
-            setCategoryImages(images);
-          })
-          .catch((categoryError) => {
-            console.error("Error fetching category images:", categoryError);
-          });
       })
       .catch((error) => {
         console.error("Error fetching item data:", error);
@@ -137,6 +109,21 @@ const ProdDesc = (props: ProdDescProps) => {
   // STATE
   const { navStyle } = useSelector(({ settings }: RootState) => settings);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const fetchProductImage = (imageId: number) => {
+    axios
+      .get(`http://127.0.0.1:5000/api/images/43`, {
+        responseType: "arraybuffer"
+      })
+      .then((response) => {
+        const base64Image = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ""));
+        setSelectedProductImage(`data:image/jpeg;base64, ${base64Image}`);
+      })
+      .catch((error) => {
+        console.error("Error fetching product image:", error);
+        setSelectedProductImage(null);
+      });
+  };
 
   // HANDLERS
   const handleShowModal = () => {
@@ -166,50 +153,55 @@ const ProdDesc = (props: ProdDescProps) => {
   }, []);
 
   function ImageCarousel() {
-    const IMAGE_SIZE = 350;
-    const IMAGE_HEIGHT = 300;
-    const AUTOPLAY_INTERVAL = 2000;
-    const IMAGE_SPACING = 20;
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const handleArrowClick = () => {
-      setCurrentIndex((prevIndex) => {
-        if (prevIndex + 2 >= categoryImages.length) return 0;
-        return prevIndex + 1;
-      });
-    };
-
-    useEffect(() => {
-      window.addEventListener("resize", () => {
-        dispatch(updateWindowWidth(window.innerWidth));
-      });
-      const autoplay = setInterval(() => {
-        handleArrowClick();
-      }, AUTOPLAY_INTERVAL);
-
-      return () => clearInterval(autoplay); // Cleanup the interval when the component is unmounted
-    }, [dispatch]);
-
     return (
-      <div style={styles.imageCarouselContainer}>
-        <h1>{itemData ? itemData.item_name : "Title"}</h1>
-        <Image.PreviewGroup>
-          <div style={styles.imageDisplay}>
-            {categoryImages[currentIndex] && <Image width={IMAGE_SIZE} height={IMAGE_HEIGHT} src={`data:image/jpeg;base64, ${categoryImages[currentIndex].image_data}`} style={{ marginRight: `${IMAGE_SPACING}px` }} />}
-            {categoryImages[currentIndex + 1] && <Image width={IMAGE_SIZE} height={IMAGE_HEIGHT} src={`data:image/jpeg;base64, ${categoryImages[currentIndex + 1].image_data}`} />}
-            <button onClick={handleArrowClick} style={styles.imageNavigator}>
-              ➔
-            </button>
+      <div className="content-container">
+        <div className="image-carousel-container">
+          {" "}
+          {/* Use the CSS class here */}
+          <div className="image-container">
+            {" "}
+            {/* Use the CSS class here */}
+            <h1>{itemData ? itemData.item_name : "Title"}</h1>
+            {itemData && itemData.image_info ? (
+              <img
+                alt="example"
+                src={`http://127.0.0.1:5000/api/images/43`}
+                width={300}
+                height={350}
+                onClick={() => {
+                  console.log("here", itemData);
+                  fetchProductImage(itemData.image_info[0]);
+                }}
+              />
+            ) : (
+              <div>No image available</div>
+            )}
           </div>
-        </Image.PreviewGroup>
-        <section style={styles.productDetails}>
-          <h2>Product Details</h2>
-          <p>{itemData ? itemData.descriptions : "Description"}</p>
-          <Button type="primary" shape="round" icon={<ContactsOutlined />} style={styles.contactBtn}>
-            Contact Donor
-          </Button>
-        </section>
+          <section className="details-container">
+            <br />
+            <br />
+            <br />
+            <h2>Product Details</h2>
+            <p>
+              <strong>Category:</strong> {itemData ? itemData.category : "Category"}
+            </p>
+            <p>
+              <strong>Description:</strong> {itemData ? itemData.descriptions : "Description"}
+            </p>
+            <p>
+              <strong>Address:</strong> {itemData ? itemData.item_address : "Address"}
+            </p>
+            <p>
+              <strong>Time Used:</strong> {itemData ? itemData.time_used : "Time Used(in years): "}
+            </p>
+            <p>
+              <strong>Specifications:</strong> {itemData ? itemData.specification : "Specifications"}
+            </p>
+            <Button type="primary" shape="round" icon={<ContactsOutlined />} style={styles.contactBtn}>
+              Contact Donor
+            </Button>
+          </section>
+        </div>
       </div>
     );
   }
