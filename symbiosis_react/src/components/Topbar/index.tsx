@@ -17,7 +17,6 @@ import { useHistory } from "react-router-dom";
 
 import { isAuthenticatedUser } from "../SignIn/Auth";
 
-
 const { Header } = Layout;
 const { Search } = Input;
 
@@ -93,11 +92,11 @@ const Topbar = () => {
       </AutoComplete>
       </div>
       {/* Category Dropdown */}
-      <Menu mode="horizontal" selectable={false} style={{ marginLeft: "20px" }}>
+      <Menu mode="horizontal" selectable={false} style={{ marginLeft: "0px" }}>
         <SubMenu
           title={
             <span style={{ display: "flex", alignItems: "center" }}>
-              <i className="icon icon-feedback" style={{ marginRight: "8px" }} />
+              <i className="icon icon-feedback" style={{ marginRight: "16px" }} />
               Category
             </span>
           }
@@ -134,13 +133,9 @@ const Topbar = () => {
       >
         {/* Add the link button here */}
         {/* Use an anchor tag to open the URL */}
-        <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-
-          
-          
-        </div>
+        <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}></div>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>
-          <div style={{ marginTop: "10px", display: "flex", gap: "10px"}}>
+          <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
             {isAuthenticated ? (
               <>
                 <Link to="/donationForm">
