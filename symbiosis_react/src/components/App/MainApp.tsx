@@ -186,7 +186,7 @@ const MainApp = () => {
                 {products.map((product) => (
                   <Col key={product.item_id} className="gutter-row" span={6}>
                     <div onClick={() => handleCardClick(product.item_id)}>
-                      <Link to={`http://127.0.0.1:5000/api/get_product/${product.item_id}`}>
+                      <Link to={`/productdescription/${product.item_id}`}>
                         <Card
                           style={{ width: 300 }}
                           cover={

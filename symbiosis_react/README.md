@@ -1,5 +1,3 @@
-# Adani Analytics Front-end
-
 ## Before raising a PR, run the lint checks in the following order.
 
 1- yarn run format:check (If any issues found, let prettier format the codebase).  
