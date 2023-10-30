@@ -1,0 +1,24 @@
+.image-carousel-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.image-container {
+  margin-right: 21px; /* Adjust the margin as needed */
+}
+
+.details-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the content */
+  align-items: flex-start; /* Align items to the start (left) */
+}
+
+.content-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh; /* Adjust the height as needed */
+  margin: 20px; /* Add margin to control spacing */
+}

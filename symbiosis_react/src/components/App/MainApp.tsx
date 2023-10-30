@@ -13,6 +13,7 @@ import type { RootState } from "../../appRedux/store";
 import CommonModal from "../Modal";
 import axios from "axios";
 import CONFIG from "../Config/config";
+import ProdDesc from "../ProdDesc";
 
 const { Content, Footer } = Layout;
 const { Meta } = Card;
@@ -58,6 +59,8 @@ const MainApp = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedProductImage, setSelectedProductImage] = useState<string | null>(null);
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+  const [isProdDescVisible, setProdDescVisible] = useState(false);
 
   type Product = {
     category: string;
@@ -69,6 +72,10 @@ const MainApp = () => {
     item_name: string;
     specification: string;
     time_used: number;
+  };
+
+  type ProdDescProps = {
+    itemId: number | null;
   };
 
   type ApiResponse = {
@@ -138,6 +145,11 @@ const MainApp = () => {
     }
   };
 
+  const handleCardClick = (itemId: number) => {
+    setSelectedItemId(itemId); // Assign the itemId to the state
+    setProdDescVisible(true);
+  };
+
   useEffect(() => {
     const currentTimeStamp = moment();
     const tokenExpiryTimeStamp = JSON.parse(localStorage.getItem("tokenExpiryTimeStamp") || "{}");
@@ -173,8 +185,8 @@ const MainApp = () => {
               <Row gutter={[16, 24]}>
                 {products.map((product) => (
                   <Col key={product.item_id} className="gutter-row" span={6}>
-                    <div>
-                      <Link to={`api/get_product/${product.item_id}`}>
+                    <div onClick={() => handleCardClick(product.item_id)}>
+                      <Link to={`/productdescription/${product.item_id}`}>
                         <Card
                           style={{ width: 300 }}
                           cover={
@@ -210,6 +222,7 @@ const MainApp = () => {
                   © SevaSahayog (company). {new Date().getFullYear()}-{(new Date().getFullYear() + 1).toString().slice(2)}
                 </div>
               </div>
+              {isProdDescVisible && <ProdDesc itemId={selectedItemId} />} {/* Render ProdDesc component */}
             </Footer>
           </Content>
         </Layout>
